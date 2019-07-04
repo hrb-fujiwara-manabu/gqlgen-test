@@ -1,0 +1,63 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    users(name: String): [User]!
+    user(id: ID!): User
+    profiles(title: String, description: String, ownerId: String): [Profile]!
+    profile(id: ID!): Profile
+}
+
+type Mutation {
+    createUser(user: UserInput!): User
+    updateUser(id: ID!): User
+    deleteUser(id: ID!): Boolean!
+}
+
+type User {
+    id: ID!
+    email: String!
+    firstName: String!
+    lastName: String!
+    phone: String!
+    profiles: [Profile]!
+    purchase: Purchase!
+    createdAt: String!
+    updatedAt: String!
+    deletedAt: String
+}
+
+input UserInput {
+    email: String!
+    firstName: String!
+    lastName: String!
+    phone: String
+    profiles: [ProfileInput]
+    purchase: PurchaseInput
+}
+
+type Profile {
+    id: ID!
+    owner: User!
+    title: String!
+    description: String!
+    changedBy: User!
+}
+
+input ProfileInput {
+    title: String!
+    description: String
+}
+
+type Purchase {
+    id: ID!
+    owner: User!
+    has: Boolean!
+    startedAt: String!
+}
+
+input PurchaseInput {
+    has: Boolean!
+}
